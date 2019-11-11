@@ -18,3 +18,4 @@ for p in ax.patches:
     width, height = p.get_width(), p.get_height()
     x, y = p.get_xy() 
     ax.annotate('{:.0%}'.format(height), (x, y + height + 0.01))
+    
