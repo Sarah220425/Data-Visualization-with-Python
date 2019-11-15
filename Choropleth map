@@ -1,0 +1,28 @@
+import pandas as pd
+import numpy as np
+import folium
+from pandas import Series, DataFrame
+
+df = pd.read_csv('D:\COURSERA\Data Visualization\PDI.csv')
+df = df.groupby(['PdDistrict']).count().reset_index()
+DataFrame(df)
+df = df[['PdDistrict','IncidntNum']]
+data = df.rename(columns={'PdDistrict':'Neighborhood', 'IncidntNum':'Count'})
+print(data)
+
+# definition of the boundaries in the map
+SF_geo = 'D:/COURSERA/Data Visualization/san-francisco.geojson'
+SF_map = folium.Map(location=[37.77, -122.42], zoom_start=12)
+
+# creation of the choropleth
+SF_map.choropleth(
+    geo_data=SF_geo,
+    data=df,
+    columns=['Neighborhood', 'Count'],
+    key_on='feature.properties.DISTRICT',
+    fill_color='YlOrRd', 
+    fill_opacity=0.7, 
+    line_opacity=0.2,
+    legend_name=' San Francisco crime density')
+
+SF_map
